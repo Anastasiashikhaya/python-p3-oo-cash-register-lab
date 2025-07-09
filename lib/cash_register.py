@@ -11,18 +11,30 @@ class CashRegister:
         self.items.extend([title] * quantity)
 
     def apply_discount(self):
-        if self.discount == 0:
-            print("There is no discount to apply.")
-        else:
+        if self.discount > 0:
             discount_amount = self.total * self.discount / 100
             self.total -= discount_amount
             print(f"After the discount, the total comes to ${int(self.total)}.")
+        else:
+            print("There is no discount to apply.")
 
     def void_last_transaction(self):
         self.total -= self.last_transaction
-        # Remove the items from the last transaction
         if self.last_transaction > 0:
-            # For simplicity, we'll just clear all items if total is 0
             if self.total == 0:
                 self.items = []
-            # In a more complete implementation, we'd track items per transaction
+
+# Test code that runs when executed directly
+if __name__ == "__main__":
+    print("Testing CashRegister class...")
+    register = CashRegister(20)
+    register.add_item("Apple", 0.99)
+    print(f"Total after adding Apple: ${register.total}")
+    register.add_item("Banana", 1.50, 2)
+    print(f"Total after adding Bananas: ${register.total}")
+    print(f"Items in cart: {register.items}")
+    register.apply_discount()
+    print(f"Total after discount: ${register.total}")
+    register.void_last_transaction()
+    print(f"Total after voiding: ${register.total}")
+    print("Tests completed!")
